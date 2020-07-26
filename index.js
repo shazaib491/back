@@ -28,10 +28,11 @@ app.get('/', (req, res, next) => {
 const port = process.env.PORT || 8080;
 
 //########server started#############
-app.listen(port, () => {
-        console.log('your server is running at port number 3000')
-    })
-    //########server started#############
+app.listen(process.env.PORT || 3000, () => {
+    console.log('your server is running at port number 3000')
+})
+
+//########server started#############
 
 // app.use request error
 app.use((req, res, next) => {
