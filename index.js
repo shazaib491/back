@@ -21,9 +21,9 @@ app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'public/index.html'))
     })
     // ###### get null request #####
-app.get('/', (req, res, next) => {
-        res.send('nothing should be found');
-    })
+    // app.get('/', (req, res, next) => {
+    //         res.send('nothing should be found');
+    //     })
     // ###### get null request #####
 const port = process.env.PORT || 8080;
 
