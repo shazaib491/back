@@ -17,6 +17,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/api', route);
 app.use('/public', express.static('public'));
 
+// app.use req error
+app.use(function(err, req, res, next) {
+        console.log(err.message);
+        if (!err.statusCode) err.statusCode = 500;
+        res.status(err.statusCode).send(err.message)
+
+    })
+    // app.use req error
+
 app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'public/index.html'))
     })
@@ -41,12 +50,3 @@ app.use((req, res, next) => {
         })
     })
     // app.use request error
-
-// app.use req error
-app.use(function(err, req, res, next) {
-        console.log(err.message);
-        if (!err.statusCode) err.statusCode = 500;
-        res.status(err.statusCode).send(err.message)
-
-    })
-    // app.use req error
