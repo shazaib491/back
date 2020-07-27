@@ -1747,12 +1747,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
 
     var FileUploadService = /*#__PURE__*/function () {
+      // headers = new HttpHeaders().set('Content-type', 'application/json');
       function FileUploadService(http) {
         _classCallCheck(this, FileUploadService);
 
         this.http = http;
         this.baseUrl = "http://localhost:3000/api";
-        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Content-type', 'application/json');
       }
 
       _createClass(FileUploadService, [{
@@ -1765,7 +1765,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           formData.append('price', price);
           formData.append('p_category', p_category);
           formData.append('image', image);
-          return this.http.post('/insert', formData, {
+          return this.http.post("api/insert", formData, {
             reportProgress: true,
             observe: 'events'
           });
@@ -1774,14 +1774,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getUser",
         value: function getUser() {
-          return this.http.get('selectAll');
+          return this.http.get("api/selectAll");
         } // get alldata
         // byid
 
       }, {
         key: "getUbyId",
         value: function getUbyId(id) {
-          return this.http.get("selectById/".concat(id));
+          return this.http.get("api/selectById/".concat(id));
         } // byid
         //update
 
@@ -1795,7 +1795,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           formData.append('price', data.price);
           formData.append('p_category', data.p_category);
           formData.append('image', data.image);
-          return this.http.patch("/update/".concat(id), formData, {
+          return this.http.patch("api/update/".concat(id), formData, {
             responseType: 'text'
           });
         } //update
@@ -1804,14 +1804,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "contact",
         value: function contact(payload) {
-          return this.http.post('/contacts', payload);
+          return this.http.post("api/contacts", payload);
         } //contact
         // delete data
 
       }, {
         key: "onDelete",
         value: function onDelete(id) {
-          return this.http["delete"]("/remove/".concat(id), {
+          return this.http["delete"]("api/remove/".concat(id), {
             responseType: 'text'
           });
         } // delete data

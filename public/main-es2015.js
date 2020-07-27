@@ -883,12 +883,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 class FileUploadService {
+    // headers = new HttpHeaders().set('Content-type', 'application/json');
     constructor(http) {
         this.http = http;
         this.baseUrl = "http://localhost:3000/api";
-        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Content-type', 'application/json');
     }
     addUser(p_name, p_sname, discount, price, p_category, image) {
         var formData = new FormData();
@@ -898,19 +897,19 @@ class FileUploadService {
         formData.append('price', price);
         formData.append('p_category', p_category);
         formData.append('image', image);
-        return this.http.post('/insert', formData, {
+        return this.http.post(`api/insert`, formData, {
             reportProgress: true,
             observe: 'events',
         });
     }
     // get alldata
     getUser() {
-        return this.http.get('selectAll');
+        return this.http.get(`api/selectAll`);
     }
     // get alldata
     // byid
     getUbyId(id) {
-        return this.http.get(`selectById/${id}`);
+        return this.http.get(`api/selectById/${id}`);
     }
     // byid
     //update
@@ -922,17 +921,17 @@ class FileUploadService {
         formData.append('price', data.price);
         formData.append('p_category', data.p_category);
         formData.append('image', data.image);
-        return this.http.patch(`/update/${id}`, formData, { responseType: 'text' });
+        return this.http.patch(`api/update/${id}`, formData, { responseType: 'text' });
     }
     //update
     //contact
     contact(payload) {
-        return this.http.post('/contacts', payload);
+        return this.http.post(`api/contacts`, payload);
     }
     //contact
     // delete data
     onDelete(id) {
-        return this.http.delete(`/remove/${id}`, { responseType: 'text' });
+        return this.http.delete(`api/remove/${id}`, { responseType: 'text' });
     }
     // delete data
     //Error Handling
