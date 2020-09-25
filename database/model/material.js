@@ -19,7 +19,13 @@ const userSchema = mongoose.Schema({
     p_category: {
         type: String
     },
-    image: {
+    image1: {
+        type: String
+    },
+    image2: {
+        type: String
+    },
+    image3: {
         type: String
     },
     c_date: {

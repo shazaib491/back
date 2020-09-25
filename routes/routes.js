@@ -27,18 +27,18 @@ router.post('/register', (req, res) => {
     var cpassword = req.body.cpassword;
     if (password !== cpassword) {
         res.json({
-            msg: "password is not matching"
+            warn: "password is not matching"
         })
     } else {
         admin.addUser(newUser, (err, user) => {
             if (err) {
                 res.json({
-                    msg: "user not registered",
-                    err: err
+                    err: "user not registered",
+                    errr: err
                 });
             } else {
                 res.json({
-                    msg: "user registered",
+                    success: "user registered",
                     data: newUser
                 });
             }
@@ -130,21 +130,25 @@ var upload = multer({
     // set file limitation
 
 // shop material inserted data
-router.post('/insert', upload.single('image'), (req, res) => {
+router.post('/insert', upload.fields([{ name: 'avatar' }, { name: 'gallery'}, { name: 'third'}]), (req, res) => {
+        console.log('comes')
         const url = req.protocol + '://' + req.get('host');
         let data = new material({
             p_name: req.body.p_name,
             p_sname: req.body.p_sname,
             discount: req.body.discount,
             price: req.body.price,
-            image: url + '/public/images/' + req.file.filename,
+            image1: url + '/public/images/' + req.files['avatar'][0],
+            image2: url + '/public/images/' + req.files['gallery'][0],
+            image3: url + '/public/images/' + req.files['third'][0],
             p_category: req.body.p_category,
             c_date: Date.now(),
             u_date: Date.now()
         })
 
         material.addMaterail(data, (err, data) => {
-            if (err) throw err;
+            if (err) {
+                res.json(err)};
             if (data) {
                 res.json({
                     success: true,
@@ -155,14 +159,14 @@ router.post('/insert', upload.single('image'), (req, res) => {
         })
     })
     // shop material
-    // select all 
+    // select all
 router.get('/selectAll', (req, res) => {
         material.find({}).then((data) => res.json(data))
             .catch(err => res.json(err))
     })
-    // select all 
+    // select all
 
-// select by id 
+// select by id
 router.get('/selectById/:_id', (req, res) => {
         const id = req.params._id;
         material.findById({
@@ -171,7 +175,7 @@ router.get('/selectById/:_id', (req, res) => {
             res.send(result)
         }).catch(err => res.send(err))
     })
-    // select by id 
+    // select by id
     // update  by id
 router.patch('/update/:_id', upload.single('image'), (req, res) => {
         console.log(req);
@@ -217,54 +221,57 @@ router.post('/contacts', (req, res) => {
         contacts.addContacts(data, (err, data) => {
             if (err) throw err;
             if (data) {
-
-                var transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    host: 'smtp.gmail.com',
-                    port: 587,
-                    secure: false,
-                    requireTLS: true,
-                    auth: {
-                        user: 'uniquemensboutique@gmail.com',
-                        pass: 'mausamash'
-                    }
-                });
-                var mailOptions = {
-                    from: 'uniquemensboutique@gmail.com',
-                    to: data.email,
-                    subject: 'Dear user ',
-                    text: 'We Will contact you Soon!'
-                };
-                var mailOptions1 = {
-
-                    from: data.email,
-                    to: 'uniquemensboutique@gmail.com',
-                    subject: 'New request comes',
-                    text: "\n" + "from:- Name:- \t" + data.name + "\n" + "  Email is :-\t" + data.email + "\n Mobile no :- \t " + data.mobile
-
-                };
-                transporter.sendMail(mailOptions, function(error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                        res.send({
-                            success: true,
-                            msg: "we will contact you soon"
-                        })
-                    }
-                });
-                transporter.sendMail(mailOptions1, function(error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                        res.send({
-                            success: true,
-
-                        })
-                    }
-                });
+                res.json({
+                  msg:"data submitted",
+                  success:true
+                })
+                // var transporter = nodemailer.createTransport({
+                //     service: 'gmail',
+                //     host: 'smtp.gmail.com',
+                //     port: 587,
+                //     secure: false,
+                //     requireTLS: true,
+                //     auth: {
+                //         user: 'uniquemensboutique@gmail.com',
+                //         pass: 'mausamash'
+                //     }
+                // });
+                // var mailOptions = {
+                //     from: 'uniquemensboutique@gmail.com',
+                //     to: data.email,
+                //     subject: 'Dear user ',
+                //     text: 'We Will contact you Soon!'
+                // };
+                // var mailOptions1 = {
+                //
+                //     from: data.email,
+                //     to: 'uniquemensboutique@gmail.com',
+                //     subject: 'New request comes',
+                //     text: "\n" + "from:- Name:- \t" + data.name + "\n" + "  Email is :-\t" + data.email + "\n Mobile no :- \t " + data.mobile
+                //
+                // };
+                // transporter.sendMail(mailOptions, function(error, info) {
+                //     if (error) {
+                //         console.log(error);
+                //     } else {
+                //         console.log('Email sent: ' + info.response);
+                //         res.send({
+                //             success: true,
+                //             msg: "we will contact you soon"
+                //         })
+                //     }
+                // });
+                // transporter.sendMail(mailOptions1, function(error, info) {
+                //     if (error) {
+                //         console.log(error);
+                //     } else {
+                //         console.log('Email sent: ' + info.response);
+                //         res.send({
+                //             success: true,
+                //
+                //         })
+                //     }
+                // });
 
             }
         })
